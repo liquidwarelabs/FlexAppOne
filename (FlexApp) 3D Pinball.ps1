@@ -1,4 +1,8 @@
 # Edit here
+#description: Enables 3D Pinball
+#tags: Liquidware FlexApp
+#execution mode: Combined
+
 $AppName = "3DPinball.exe" # case-sensitive
 $DownloadPath = "https://fa1poc.blob.core.windows.net/fa1/poc"
 
