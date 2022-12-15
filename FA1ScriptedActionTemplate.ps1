@@ -29,3 +29,4 @@ Start-Process -FilePath "schtasks.exe" -ArgumentList "/Create /XML `"$FlexAppPat
 Start-Process -FilePath "$FlexAppPath\$AppName.exe" -ArgumentList "--system --index 999"
 timeout /t 5
 Start-Process -FilePath "$FlexAppPath\$AppName.exe" -ArgumentList "--system --ctl --addtostart --skipactivation"
+  
