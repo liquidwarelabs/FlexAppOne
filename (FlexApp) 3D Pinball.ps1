@@ -2,6 +2,10 @@
 #description: Enables 3D Pinball
 #tags: Liquidware FlexApp
 #execution mode: Combined
+<#
+Notes:
+This FlexApp One is hosted on a Liquidware blob location.
+#>
 
 $AppName = "3DPinball.exe" # case-sensitive
 $DownloadPath = "https://fa1poc.blob.core.windows.net/fa1/poc"
