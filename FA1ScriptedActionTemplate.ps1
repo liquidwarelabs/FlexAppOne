@@ -1,10 +1,12 @@
 # Edit here
 $AppName = "AppName" # case-sensitive
 $DownloadPath = "https://fa1poc.blob.core.windows.net/fa1/poc"
-$FlexAppPath = "C:\ProgramData\FlexAppOne"
 
 # Do not edit past here
 $ProgressPreference = 'SilentlyContinue'
+
+# If you do change the path, you need to change the AppName.exe.xml and re-run the script that generate the .XML, .CMD and Manifest.txt file
+$FlexAppPath = "C:\ProgramData\FlexAppOne"
 mkdir $FlexAppPath
 
 # Download and install FlexApp service
@@ -20,6 +22,7 @@ Invoke-WebRequest -OutFile "$FlexAppPath\$AppName.exe.xml" -URI "$DownloadPath/$
 Invoke-WebRequest -OutFile "$FlexAppPath\$AppName.exe.cmd" -URI "$DownloadPath/$AppName.exe.cmd"
 
 # Create scheduled task to mount app on restart
+Start-Process -FilePath "schtasks.exe" -ArgumentList "/Delete /tn `"(FA1)\$AppName.exe`" /f"
 Start-Process -FilePath "schtasks.exe" -ArgumentList "/Create /XML `"$FlexAppPath\$AppName.exe.xml`" /tn `"(FA1)\$AppName.exe`" /ru system"
 
 # Mount app
