@@ -1,10 +1,10 @@
 #-------------Edit starting here, typically the AppName, Download Path, Description, Tags and Notes
-$AppName = "SublimeTextEditor.exe" #case-sensitive
+$AppName = "SublimeTextEditor" #case-sensitive and no.exe
 $DownloadPath = "https://fa1poc.blob.core.windows.net/fa1/poc"
 #description: Enables SublimeTextEditor
 #tags: Liquidware FlexApp
 #execution mode: Combined
-    #< 
+    <# 
       Notes:
       This FlexApp One is hosted on a Liquidware blob location.
     #>
