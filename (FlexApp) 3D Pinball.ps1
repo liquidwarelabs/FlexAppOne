@@ -1,14 +1,14 @@
-# Edit here
+#-------------Edit starting here, typically the AppName, Download Path, Description, Tags and Notes
+$AppName = "3DPinball.exe" # case-sensitive
+$DownloadPath = "https://fa1poc.blob.core.windows.net/fa1/poc"
 #description: Enables 3D Pinball
 #tags: Liquidware FlexApp
 #execution mode: Combined
-<#
-Notes:
-This FlexApp One is hosted on a Liquidware blob location.
-#>
-
-$AppName = "3DPinball.exe" # case-sensitive
-$DownloadPath = "https://fa1poc.blob.core.windows.net/fa1/poc"
+    <#
+      Notes:
+      This FlexApp One is hosted on a Liquidware blob location.
+    #>
+#-------------Normally you will not edit past here
 
 # Do not edit past here
 $ProgressPreference = 'SilentlyContinue'
