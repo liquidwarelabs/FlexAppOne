@@ -1,5 +1,5 @@
 #-------------Edit starting here, typically the AppName, Download Path, Description, Tags and Notes
-$AppName = "3DPinball.exe" # case-sensitive
+$AppName = "3DPinball" #case-sensitive and no .exe
 $DownloadPath = "https://fa1poc.blob.core.windows.net/fa1/poc"
 #description: Enables 3D Pinball
 #tags: Liquidware FlexApp
