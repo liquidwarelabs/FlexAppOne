@@ -4,7 +4,7 @@ $DownloadPath = "https://fa1poc.blob.core.windows.net/fa1/poc"
 #description: Enables Teams
 #tags: Liquidware FlexApp
 #execution mode: Combined
-    <#
+    #<
       Notes:
       This FlexApp One is hosted on a Liquidware blob location.
     #>
