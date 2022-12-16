@@ -1,5 +1,5 @@
 #-------------Edit starting here, typically the AppName, Download Path, Description, Tags and Notes
-$AppName = "Teams.exe" #case-sensitive
+$AppName = "Teams" #case-sensitive and no .exe
 $DownloadPath = "https://fa1poc.blob.core.windows.net/fa1/poc"
 #description: Enables Teams
 #tags: Liquidware FlexApp
