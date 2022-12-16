@@ -1,5 +1,5 @@
 #-------------Edit starting here, typically the AppName, Download Path, Description, Tags and Notes
-$AppName = "Paint.NET.exe" #case-sensitive
+$AppName = "Paint.NET" #case-sensitive and no .exe
 $DownloadPath = "https://fa1poc.blob.core.windows.net/fa1/poc"
 #description: Enables Paint.NET
 #tags: Liquidware FlexApp
