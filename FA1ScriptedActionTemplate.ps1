@@ -1,6 +1,14 @@
-# Edit here
-$AppName = "AppName" # case-sensitive
+#-------------Edit starting here, typically the AppName, Download Path, Description, Tags and Notes
+$AppName = "AppName.exe" # case-sensitive
 $DownloadPath = "https://fa1poc.blob.core.windows.net/fa1/poc"
+#description: Enables AppName
+#tags: Liquidware FlexApp
+#execution mode: Combined
+    <#
+      Notes:
+      This FlexApp One is hosted on a company blob location.
+    #>
+#-------------Normally you will not edit past here
 
 # Do not edit past here
 $ProgressPreference = 'SilentlyContinue'
