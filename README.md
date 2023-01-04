@@ -1,9 +1,9 @@
 # FlexAppOne
-1. Enable PowerShell Templates - Use with Nerdio Scripted Actions
-2. Add this repository to your Nerdio Manager instance.
-3. Try the FlexApp Ones with your host pools.
-4. Create your own FlexApp One applications to store on Azure Blog, using the FlexApp Packaging Console (Available Online).
-5. Create .exe.xml and .exe.cmd files and post all three files to your own Azure Blob storage location.
+Enable PowerShell Templates - Use with Nerdio Scripted Actions
+1. Add this repository to your Nerdio Manager instance.
+2. Try the FlexApp Ones with your host pools.
+3. Create your own FlexApp One applications to store on Azure Blog, using the FlexApp Packaging Console (Available Online).
+4. Create .exe.xml and .exe.cmd files and post all three files to your own Azure Blob storage location.
 
 Nerdio:
 https://getnerdio.com/academy/new-nerdio-integration-with-liquidwares-flexapp-one/
