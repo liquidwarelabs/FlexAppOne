@@ -1,4 +1,7 @@
-# Enables 03 - 7Zip - File Archive.exe via Liquidware FlexApp One #description
+# Enables 03 - 7Zip - File Archive.exe via Liquidware FlexApp One
+#description: 7Zip - File Archive.exe via Liquidware FlexApp One
+#tags: Liquidware FlexApp
+#execution mode: Combined
 
 # Only edit the following section #documentation
 # For appName, do not add .exe #documentation
