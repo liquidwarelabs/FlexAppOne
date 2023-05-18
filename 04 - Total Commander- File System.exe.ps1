@@ -1,4 +1,7 @@
-# Enables 03 - Total Commander - File System.exe via Liquidware FlexApp One #description
+# Enables 03 - Total Commander - File System.exe via Liquidware FlexApp One
+#description: Enables Total Commander - File System.exe via Liquidware FlexApp One
+#tags: Liquidware FlexApp
+#execution mode: Combined
 
 # Only edit the following section #documentation
 # For appName, do not add .exe #documentation
