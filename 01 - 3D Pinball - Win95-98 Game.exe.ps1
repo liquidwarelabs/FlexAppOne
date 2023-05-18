@@ -1,5 +1,7 @@
-# Enables 01 - 3D Pinball - Win95-98 Game.exe via Liquidware FlexApp One #description
-
+# Enables 01 - 3D Pinball - Win95-98 Game.exe via Liquidware FlexApp One 
+#description: Enables 3D Pinball - Win95-98 Game.exe via Liquidware FlexApp One
+#tags: Liquidware FlexApp
+#execution mode: Combined
 # Only edit the following section #documentation
 # For appName, do not add .exe #documentation
 # appName and url parameters are usually Case Sensitive #documentation
@@ -10,8 +12,6 @@
 ???? $options = "--system --index 999 --ctl --addtostart" #parameter
 ???? $runPath = "C:\ProgramData\FlexappOne" #parameter
 #
-#tags: Liquidware FlexApp
-#execution mode: Combined
 # Normally you do not edit past here
 
 # Download required files for the app
