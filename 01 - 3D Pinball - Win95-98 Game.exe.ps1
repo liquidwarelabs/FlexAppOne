@@ -10,6 +10,8 @@
 ???? $options = "--system --index 999 --ctl --addtostart" #parameter
 ???? $runPath = "C:\ProgramData\FlexappOne" #parameter
 #
+#tags: Liquidware FlexApp
+#execution mode: Combined
 # Normally you do not edit past here
 
 # Download required files for the app
