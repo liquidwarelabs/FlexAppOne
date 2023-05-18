@@ -2,6 +2,7 @@
 #description: Enables 3D Pinball - Win95-98 Game.exe via Liquidware FlexApp One
 #tags: Liquidware FlexApp
 #execution mode: Combined
+
 # Only edit the following section #documentation
 # For appName, do not add .exe #documentation
 # appName and url parameters are usually Case Sensitive #documentation
