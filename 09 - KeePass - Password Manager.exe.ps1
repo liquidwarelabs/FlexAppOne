@@ -7,11 +7,17 @@
 # For appName, do not add .exe #documentation
 # appName and url parameters are usually Case Sensitive #documentation
 # You can test the download by placing url/appName.exe in your browser #documentation
+# JA mods - Create FlexApp download path if it doesn't exist 
+$FlexAppPath = "C:\ProgramData\FlexAppOne"
+If(!(test-path -PathType container $FlexAppPath))
+{
+    New-Item -ItemType Directory -Path $FlexAppPath
+}
 #
-???? $appName = "09 - KeePass - Password Manager.exe" #parameter without the .exe
-???? $url???????? = "https://fa1poc.blob.core.windows.net/fa1/poc" #parameter
-???? $options = "--system --index 999 --ctl --addtostart" #parameter
-???? $runPath = "C:\ProgramData\FlexappOne" #parameter
+$appName = "09 - KeePass - Password Manager" #parameter without the .exe
+$url     = "https://fa1poc.blob.core.windows.net/fa1/poc" #parameter
+$options = "--system --index 999 --ctl --addtostart" #parameter
+$runPath = "C:\ProgramData\FlexappOne" #parameter
 #
 # Normally you do not edit past here
 
