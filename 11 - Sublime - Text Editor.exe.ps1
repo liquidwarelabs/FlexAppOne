@@ -7,7 +7,8 @@
 # For appName, do not add .exe #documentation
 # appName and url parameters are usually Case Sensitive #documentation
 # You can test the download by placing url/appName.exe in your browser #documentation
-# JA mods - Create FlexApp download path if it doesn't exist 
+#
+# JA mods - Create FlexApp download path if it doesn't exist
 $FlexAppPath = "C:\ProgramData\FlexAppOne"
 If(!(test-path -PathType container $FlexAppPath))
 {
