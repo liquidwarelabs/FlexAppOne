@@ -15,7 +15,7 @@ If(!(test-path -PathType container $FlexAppPath))
     New-Item -ItemType Directory -Path $FlexAppPath
 }
 #
-$appName = "03 - 7Zip - File Archive.exe" #parameter without the .exe
+$appName = "03 - 7Zip - File Archive" #parameter without the .exe
 $url     = "https://fa1poc.blob.core.windows.net/fa1/poc" #parameter
 $options = "--system --index 999 --ctl --addtostart" #parameter
 $runPath = "C:\ProgramData\FlexappOne" #parameter
