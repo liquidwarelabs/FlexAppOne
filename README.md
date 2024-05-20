@@ -15,5 +15,3 @@ After you try these sample applications, you can:
 Create your own repository of scripted actions,
 Point to your own blob storage and
 Manage your own applications via FlexApp One. 
-
-Liquidware can provide you with a script to create the *.exe.xml and *.exe.cmd for each application in your blob source repository.
