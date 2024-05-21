@@ -13,19 +13,23 @@ $options = "--system --stop --clean --remove"
 # Ensure silent progress preference
 $ProgressPreference = 'SilentlyContinue'
 
-# Function to remove scheduled tasks related to FlexApps
+# Function to remove scheduled tasks related to FlexApps in the specified path
 function Remove-FlexAppTasks {
-    Get-ScheduledTask | Where-Object {$_.TaskName -like "*FA1*" -or $_.TaskName -like "*.exe"} | ForEach-Object {
-        try {
-            $taskName = $_.TaskName
-            Start-Process -FilePath "schtasks.exe" -ArgumentList "/Delete /tn `"$taskName`" /f" -NoNewWindow -Wait -ErrorAction SilentlyContinue
-        } catch {
-            # Ignore errors
+    if (Test-Path -Path $FlexAppPath) {
+        Get-ChildItem "$FlexAppPath\*.exe" -Recurse | ForEach-Object {
+            $taskName = "$($_.BaseName).exe"
+            try {
+                Start-Process -FilePath "schtasks.exe" -ArgumentList "/Delete /tn `"$taskName`" /f" -NoNewWindow -Wait -ErrorAction SilentlyContinue
+            } catch {
+                # Ignore errors
+            }
         }
+    } else {
+        Write-Output "Directory $FlexAppPath does not exist. Skipping task removal."
     }
 }
 
-# Function to stop, clean, and remove FlexApp executables
+# Function to stop, clean, and remove FlexApp executables in the specified path
 function Clean-FlexAppExecutables {
     if (Test-Path -Path $FlexAppPath) {
         Get-ChildItem "$FlexAppPath\*.exe" -Recurse | ForEach-Object {
@@ -45,8 +49,8 @@ function Clean-FlexAppExecutables {
     }
 }
 
-# Remove scheduled tasks
+# Remove scheduled tasks associated with FlexApps in the specified path
 Remove-FlexAppTasks
 
-# Clean and remove FlexApp executables
+# Clean and remove FlexApp executables in the specified path
 Clean-FlexAppExecutables
