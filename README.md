@@ -1,4 +1,4 @@
-# FlexAppOne
+# FlexApp One
 Enable PowerShell Templates - Use with Nerdio Scripted Actions
 1. Add this repository to your Nerdio Manager instance.
 2. Try the FlexApp One applications with your host pools.
