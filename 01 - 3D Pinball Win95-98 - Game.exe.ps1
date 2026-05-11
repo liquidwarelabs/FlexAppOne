@@ -5,6 +5,8 @@
 #description: Enables 3DPinball - Win95-98 Game.exe via Liquidware FlexApp One. There are many ways to centrally 'stream' or 'deploy' FlexApp / FlexApp One.
 #tags: Liquidware FlexApp
 #execution mode: Combined
+#Type: app
+#Category: FlexApp Applications
 
 # Only edit the following section                          #documentation
 # For appName, do not add .exe                             #documentation
