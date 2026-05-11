@@ -1,6 +1,8 @@
 #description: Deletes all FlexApps within ProgramData\FlexAppOne and Scheduled Tasks
 #tags: Liquidware FlexApp
 #execution mode: Combined
+#Type: utility_remove_all
+#Category: FlexApp Utilities
 
 <#
   Notes:
