@@ -4,6 +4,8 @@
 #description: Installs the FlexApp One Service. There are many ways to install FlexApp One centrally and to run - 'stream' or 'deploy' FlexApp / FlexApp One.
 #tags: Liquidware FlexApp Service
 #execution mode: Combined
+#Type: service
+#Category: FlexApp Service
 
 # Only edit the following section                          #documentation
 # For appName, do not add .exe                             #documentation
