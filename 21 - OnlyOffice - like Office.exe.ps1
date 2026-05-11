@@ -5,6 +5,8 @@
 #description: 21 - OnlyOffice - like Office via Liquidware FlexApp One. There are many ways to centrally 'stream' or 'deploy' FlexApp / FlexApp One.
 #tags: Liquidware FlexApp
 #execution mode: Combined
+#Type: app
+#Category: FlexApp Applications
 
 # Only edit the following section                          #documentation
 # For appName, do not add .exe                             #documentation
@@ -17,7 +19,7 @@ $installer = "installer"                                   #parameter without th
 $instoptions = "--install"                                 #parameter
 $instcheck = "C:\Program Files\ProfileUnity\FlexApp\ContainerService\x64\VirtFsService.exe"  #parameter
 $url     = "https://fa1poc.blob.core.windows.net/fa1/poc"  #parameter
-$options = "--system --index 999 --ctl --addtostart"       #parameter
+$options = "--system --outofband --index 999 --ctl --addtostart"       #parameter
 $runPath = "C:\ProgramData\FlexAppOne"                     #parameter
 # Normally you do not edit past here
 
