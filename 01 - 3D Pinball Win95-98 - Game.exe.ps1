@@ -18,7 +18,7 @@ $installer = "installer"                                   #parameter without th
 $instoptions = "--install"                                 #parameter
 $instcheck = "C:\Program Files\ProfileUnity\FlexApp\ContainerService\x64\VirtFsService.exe"  #parameter
 $url     = "https://fa1poc.blob.core.windows.net/fa1/poc"  #parameter
-$options = "--system --outofband --index 999 --ctl --addtostart"       #parameter
+$options = "--system --index 999 --ctl --addtostart"       #parameter
 $runPath = "C:\ProgramData\FlexAppOne"                     #parameter
 
 # Create FlexApp One download location - runPath
