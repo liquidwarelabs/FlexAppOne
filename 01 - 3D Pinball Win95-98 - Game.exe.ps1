@@ -48,6 +48,16 @@ If (!(Test-Path -Path $instcheck)) {
     Write-Output "File already exists: $instcheck"
 }
 
+# Stop Clean any existing mount before downloading (releases file locks)
+Write-Output "Stop Clean app."
+if (Test-Path "$runPath\$appName.exe") {
+    Start-Process -FilePath "$runPath\$appName.exe" -ArgumentList "--stop --clean" -Wait
+    Write-Output "FlexApp One $appName.exe, was run with --stop --clean."
+    Start-Sleep -Seconds 3
+} else {
+    Write-Output "No existing app to stop — first install."
+}
+
 # Download the FlexApp
 Write-Output "Downloading latest version of '$appName' from $url"
 $startTime = Get-Date
@@ -57,11 +67,6 @@ Import-Module BitsTransfer
 Start-BitsTransfer -Source "$url/$appName.exe" -Destination "$runPath\$appName.exe"
 Write-Output "Time taken: $((Get-Date).Subtract($startTime).Seconds) second(s)"
 Write-Output "New application downloaded."
-
-# Stop Clean the app before running
-Write-Output "Stop Clean app."
-Start-Process -FilePath "$runPath\$appName.exe" -ArgumentList "--stop --clean" -Wait
-Write-Output "FlexApp One $appName.exe, was run with --stop --clean."
 
 # Run FlexApp with Options
 Write-Output "Loading new app."
