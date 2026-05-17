@@ -55,7 +55,7 @@ if (Test-Path "$runPath\$appName.exe") {
     Write-Output "FlexApp One $appName.exe, was run with --stop --clean."
     Start-Sleep -Seconds 3
 } else {
-    Write-Output "No existing app to stop — first install."
+    Write-Output "No existing app to stop - first install."
 }
 
 # Download the FlexApp
