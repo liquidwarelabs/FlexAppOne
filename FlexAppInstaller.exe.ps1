@@ -1,5 +1,5 @@
 # ============================================================================
-# FlexApp One Service Installer — FleetCTRL
+# FlexApp One Service Installer - FleetCTRL
 # ============================================================================
 #
 # ---- EDIT THESE VALUES ----
@@ -39,7 +39,7 @@ if (Test-Path $instcheck) {
     exit 0
 }
 
-Write-Output "FlexApp One service not found — installing..."
+Write-Output "FlexApp One service not found - installing..."
 New-Item -ItemType Directory -Force -Path $runPath | Out-Null
 Import-Module BitsTransfer
 Start-BitsTransfer -Source "$url/installer.exe" -Destination "$runPath\installer.exe"
