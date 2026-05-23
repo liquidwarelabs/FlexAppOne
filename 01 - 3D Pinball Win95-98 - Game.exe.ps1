@@ -1,5 +1,5 @@
 # ============================================================================
-# FlexApp One Deployment Script — FleetCTRL
+# FlexApp One Deployment Script - FleetCTRL
 # ============================================================================
 #
 # ---- EDIT THESE 3 VALUES ----
@@ -39,7 +39,7 @@ if ($args -contains '--uninstall') {
 # ---- Install FlexApp One service if not present ----
 $instcheck = "C:\Program Files\ProfileUnity\FlexApp\ContainerService\x64\VirtFsService.exe"
 if (!(Test-Path $instcheck)) {
-    Write-Output "FlexApp One service not found — installing..."
+    Write-Output "FlexApp One service not found - installing..."
     New-Item -ItemType Directory -Force -Path $runPath | Out-Null
     Import-Module BitsTransfer
     Start-BitsTransfer -Source "$url/installer.exe" -Destination "$runPath\installer.exe"
