@@ -11,7 +11,7 @@
 # ============================================================================
 #
 # ---- FleetCTRL Metadata ----
-# DESCRIPTION:     FlexApp One: 3D Pinball Win95-98 - Game
+# DESCRIPTION:     Deploys 3D Pinball via FlexApp One
 # TAGS:            Liquidware FlexApp
 # EXECUTION MODE:  Combined
 # TYPE:            app
