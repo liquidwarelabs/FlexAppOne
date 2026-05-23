@@ -11,7 +11,7 @@
 # ============================================================================
 #
 # ---- FleetCTRL Metadata ----
-# DESCRIPTION:     FlexApp One: VLC Player - Media Player
+# DESCRIPTION:     Deploys VLC Media Player via FlexApp One
 # TAGS:            Liquidware FlexApp
 # EXECUTION MODE:  Combined
 # TYPE:            app
