@@ -1,58 +1,54 @@
-#description: Deletes all FlexApps within ProgramData\FlexAppOne and Scheduled Tasks
-#tags: Liquidware FlexApp
-#execution mode: Combined
-#Type: utility_remove_all
-#Category: FlexApp Utilities
-
-<#
-  Notes:
-  This FlexApp One is hosted on a Liquidware blob location.
-#>
+# ============================================================================
+# Remove All FlexApp One Apps — FleetCTRL
+# ============================================================================
+#
+# ---- FleetCTRL Metadata ----
+# DESCRIPTION:     Removes ALL FlexApp One apps, scheduled tasks, and downloaded files
+# TAGS:            Liquidware FlexApp
+# EXECUTION MODE:  Combined
+# TYPE:            utility_remove_all
+# CATEGORY:        FlexApp Utilities
+# VERSION:         1.0.0.0
+#
+# ---- DO NOT EDIT BELOW THIS LINE ----
+# ============================================================================
 
 $FlexAppPath = "C:\ProgramData\FlexAppOne"
 $options = "--system --stop --clean --remove"
 
-# Ensure silent progress preference
 $ProgressPreference = 'SilentlyContinue'
 
-# Function to remove scheduled tasks related to FlexApps in the specified path
-function Remove-FlexAppTasks {
-    if (Test-Path -Path $FlexAppPath) {
-        Get-ChildItem "$FlexAppPath\*.exe" -Recurse | ForEach-Object {
-            $taskName = "$($_.BaseName).exe"
-            try {
-                Start-Process -FilePath "schtasks.exe" -ArgumentList "/Delete /tn `"$taskName`" /f" -NoNewWindow -Wait -ErrorAction SilentlyContinue
-            } catch {
-                # Ignore errors
-            }
+# ---- Remove scheduled tasks for all FlexApps ----
+if (Test-Path $FlexAppPath) {
+    Get-ChildItem "$FlexAppPath\*.exe" -Recurse | ForEach-Object {
+        $taskName = "$($_.BaseName).exe"
+        try {
+            Unregister-ScheduledTask -TaskName $taskName -Confirm:$false -ErrorAction SilentlyContinue
+            Write-Output "Removed task: $taskName"
+        } catch {
+            Write-Output "No task found: $taskName"
         }
-    } else {
-        Write-Output "Directory $FlexAppPath does not exist. Skipping task removal."
     }
+} else {
+    Write-Output "Directory $FlexAppPath does not exist. Skipping task removal."
 }
 
-# Function to stop, clean, and remove FlexApp executables in the specified path
-function Clean-FlexAppExecutables {
-    if (Test-Path -Path $FlexAppPath) {
-        Get-ChildItem "$FlexAppPath\*.exe" -Recurse | ForEach-Object {
-            if ($_.BaseName -ne "installer") {
-                if (Test-Path $_.FullName) {
-                    try {
-                        Start-Process -FilePath $_.FullName -ArgumentList "$options" -NoNewWindow -Wait -ErrorAction SilentlyContinue
-                        Remove-Item -Path $_.FullName -Force -ErrorAction SilentlyContinue
-                    } catch {
-                        # Ignore errors
-                    }
-                }
-            }
+# ---- Stop, clean, and remove all FlexApp EXEs ----
+if (Test-Path $FlexAppPath) {
+    Get-ChildItem "$FlexAppPath\*.exe" -Recurse | ForEach-Object {
+        $appExe = $_.FullName
+        $appName = $_.BaseName
+        Write-Output "Removing: $appName"
+        try {
+            Start-Process -FilePath $appExe -ArgumentList $options -NoNewWindow -Wait -ErrorAction SilentlyContinue
+        } catch {
+            Write-Output "  Could not run $appName with $options"
         }
-    } else {
-        Write-Output "Directory $FlexAppPath does not exist. Skipping executable cleanup."
+        Remove-Item $appExe -Force -ErrorAction SilentlyContinue
+        Write-Output "  Removed: $appName"
     }
+} else {
+    Write-Output "No FlexApp One apps found at $FlexAppPath"
 }
 
-# Remove scheduled tasks associated with FlexApps in the specified path
-Remove-FlexAppTasks
-
-# Clean and remove FlexApp executables in the specified path
-Clean-FlexAppExecutables
+Write-Output "All FlexApp One apps removed."
