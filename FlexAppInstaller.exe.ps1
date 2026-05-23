@@ -1,49 +1,47 @@
-# Installs the FlexApp One Service.
-# There are many ways to install FlexApp One centrally and to run - 'stream' or 'deploy' FlexApp / FlexApp One.
-
-#description: Installs the FlexApp One Service. There are many ways to install FlexApp One centrally and to run - 'stream' or 'deploy' FlexApp / FlexApp One.
-#tags: Liquidware FlexApp Service
-#execution mode: Combined
-#Type: service
-#Category: FlexApp Service
-
-# Only edit the following section                          #documentation
-# For appName, do not add .exe                             #documentation
-# appName and url parameters are usually Case Sensitive    #documentation
-# You can test the download by placing url/appName.exe in your browser #documentation
-
+# ============================================================================
+# FlexApp One Service Installer — FleetCTRL
+# ============================================================================
 #
-#$appName = "NONE"                                          #parameter without the .exe
-$installer = "installer"                                   #parameter without the .exe
-$instoptions = "--install"                                 #parameter
-$instcheck = "C:\Program Files\ProfileUnity\FlexApp\ContainerService\x64\VirtFsService.exe"  #parameter
-$url     = "https://fa1poc.blob.core.windows.net/fa1/poc"  #parameter
-#$options = "--system --index 999 --ctl --addtostart"       #parameter
-$runPath = "C:\ProgramData\FlexAppOne"                     #parameter
+# ---- EDIT THESE VALUES ----
+#
+    $url = "https://fa1poc.blob.core.windows.net/fa1/poc"  # Download URL (without filename)
+#
+# ---- FleetCTRL Metadata ----
+# DESCRIPTION:     Installs the FlexApp One service (LWLContainerService) and driver
+# TAGS:            Liquidware FlexApp Service
+# EXECUTION MODE:  Combined
+# TYPE:            service
+# CATEGORY:        FlexApp Service
+# VERSION:         1.0.0.0
+# UNINSTALL:       "C:\ProgramData\FlexAppOne\installer.exe" --uninstall
+# DETECTIONRULE:   file:"C:\Program Files\ProfileUnity\FlexApp\ContainerService\x64\VirtFsService.exe"
+#
+# ---- DO NOT EDIT BELOW THIS LINE ----
+# ============================================================================
 
-# Create FlexApp One download location - runPath
-If (!(Test-Path -PathType Container $runPath)) {
-    New-Item -ItemType Directory -Path $runPath
+$runPath   = "C:\ProgramData\FlexAppOne"
+$instcheck = "C:\Program Files\ProfileUnity\FlexApp\ContainerService\x64\VirtFsService.exe"
+
+# ---- Uninstall mode (called by FleetCTRL with --uninstall) ----
+if ($args -contains '--uninstall') {
+    if (Test-Path "$runPath\installer.exe") {
+        Start-Process -FilePath "$runPath\installer.exe" -ArgumentList "--uninstall" -NoNewWindow -Wait
+        Write-Output "FlexApp One service uninstalled."
+    } else {
+        Write-Output "Installer not found at $runPath\installer.exe"
+    }
+    exit 0
 }
 
-# Check if VirtFsService.exe exists
-If (!(Test-Path -Path $instcheck)) {
-    Write-Output "File not found: $instcheck. Downloading and installing $installer."
-
-    # Download installer
-    Write-Output "Downloading latest version of '$installer' from $url"
-    $startTime = Get-Date
-
-    # BitsTransfer module
-    Import-Module BitsTransfer
-    Start-BitsTransfer -Source "$url/$installer.exe" -Destination "$runPath\$installer.exe"
-    Write-Output "Time taken: $((Get-Date).Subtract($startTime).Seconds) second(s)"
-    Write-Output "Installer downloaded."
-
-    # Run installer with options
-    Write-Output "Running installer."
-    Start-Process -FilePath "$runPath\$installer.exe" -ArgumentList "$instoptions" -NoNewWindow -Wait
-    Write-Output "Installer $installer.exe was run with $instoptions."
-} else {
-    Write-Output "File already exists: $instcheck"
+# ---- Install ----
+if (Test-Path $instcheck) {
+    Write-Output "FlexApp One service already installed: $instcheck"
+    exit 0
 }
+
+Write-Output "FlexApp One service not found — installing..."
+New-Item -ItemType Directory -Force -Path $runPath | Out-Null
+Import-Module BitsTransfer
+Start-BitsTransfer -Source "$url/installer.exe" -Destination "$runPath\installer.exe"
+Start-Process -FilePath "$runPath\installer.exe" -ArgumentList "--install" -NoNewWindow -Wait
+Write-Output "FlexApp One service installed."
