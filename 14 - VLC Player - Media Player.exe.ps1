@@ -1,92 +1,71 @@
-# Enables VLCPlayer - Popular Media Player via Liquidware FlexApp One.
-# There are many ways to centrally 'stream' or 'deploy' FlexApp / FlexApp One.
-# Unregister Error is normal if the ScheduledTask does not already exist.
+# ============================================================================
+# FlexApp One Deployment Script — FleetCTRL
+# ============================================================================
+#
+# ---- EDIT THESE 3 VALUES ----
+#
+    $appName = "14 - VLC Player - Media Player"                # App name (without .exe)
+    $url     = "https://fa1poc.blob.core.windows.net/fa1/poc"  # Download URL (without filename)
+    $options = "--system --index 999 --ctl --addtostart"       # FA1 launch options
+#
+# ============================================================================
+#
+# ---- FleetCTRL Metadata ----
+# DESCRIPTION:     FlexApp One: VLC Player - Media Player
+# TAGS:            Liquidware FlexApp
+# EXECUTION MODE:  Combined
+# TYPE:            app
+# CATEGORY:        FlexApp Applications
+# VERSION:         1.0.0.0
+# UNINSTALL:       "C:\ProgramData\FlexAppOne\14 - VLC Player - Media Player.exe" --system --stop --clean --remove
+# DETECTIONRULE:   file:"%programdata%\Microsoft\Windows\Start Menu\Programs\FlexApp One\14 - VLC Player - Media Player.lnk"
 
-#description: Enables VLCPlayer - Popular Media Player via Liquidware FlexApp One. There are many ways to centrally 'stream' or 'deploy' FlexApp / FlexApp One.
-#tags: Liquidware FlexApp
-#execution mode: Combined
-#Type: app
-#Category: FlexApp Applications
+# ---- DO NOT EDIT BELOW THIS LINE ----
+# ============================================================================
 
-# Only edit the following section                          #documentation
-# For appName, do not add .exe                             #documentation
-# appName and url parameters are usually Case Sensitive    #documentation
-# You can test the download by placing url/appName.exe in your browser #documentation
+$runPath = "C:\ProgramData\FlexAppOne"
 
-$appName = "14 - VLC Player - Media Player"               #parameter without the .exe
-$installer = "installer"                                   #parameter without the .exe
-$instoptions = "--install"                                 #parameter
-$instcheck = "C:\Program Files\ProfileUnity\FlexApp\ContainerService\x64\VirtFsService.exe"  #parameter
-$url     = "https://fa1poc.blob.core.windows.net/fa1/poc"  #parameter
-$options = "--system --index 999 --ctl --addtostart"       #parameter
-$runPath = "C:\ProgramData\FlexAppOne"                     #parameter
-# Normally you do not edit past here
-
-# Create FlexApp One download location - runPath
-If (!(Test-Path -PathType Container $runPath)) {
-    New-Item -ItemType Directory -Path $runPath
+# ---- Uninstall mode (called by FleetCTRL with --uninstall) ----
+if ($args -contains '--uninstall') {
+    try { Unregister-ScheduledTask -TaskName "${appName}.exe" -Confirm:$false -EA SilentlyContinue } catch {}
+    if (Test-Path "$runPath\$appName.exe") {
+        Start-Process -FilePath "$runPath\$appName.exe" -ArgumentList "--system --stop --clean --remove" -Wait
+    }
+    if (Test-Path "$runPath\$appName.exe") { Remove-Item "$runPath\$appName.exe" -Force -EA SilentlyContinue }
+    Write-Output "Uninstall complete: $appName"
+    exit 0
 }
 
-# Check if VirtFsService.exe exists
-If (!(Test-Path -Path $instcheck)) {
-    Write-Output "File not found: $instcheck. Downloading and installing $installer."
-
-    # Download installer
-    Write-Output "Downloading latest version of '$installer' from $url"
-    $startTime = Get-Date
-
-    # BitsTransfer module
+# ---- Install FlexApp One service if not present ----
+$instcheck = "C:\Program Files\ProfileUnity\FlexApp\ContainerService\x64\VirtFsService.exe"
+if (!(Test-Path $instcheck)) {
+    Write-Output "FlexApp One service not found — installing..."
+    New-Item -ItemType Directory -Force -Path $runPath | Out-Null
     Import-Module BitsTransfer
-    Start-BitsTransfer -Source "$url/$installer.exe" -Destination "$runPath\$installer.exe"
-    Write-Output "Time taken: $((Get-Date).Subtract($startTime).Seconds) second(s)"
-    Write-Output "Installer downloaded."
-
-    # Run installer with options
-    Write-Output "Running installer."
-    Start-Process -FilePath "$runPath\$installer.exe" -ArgumentList "$instoptions" -NoNewWindow -Wait
-    Write-Output "Installer $installer.exe was run with $instoptions."
-} else {
-    Write-Output "File already exists: $instcheck"
+    Start-BitsTransfer -Source "$url/installer.exe" -Destination "$runPath\installer.exe"
+    Start-Process -FilePath "$runPath\installer.exe" -ArgumentList "--install" -NoNewWindow -Wait
+    Write-Output "FlexApp One service installed."
 }
 
-# Stop Clean any existing mount before downloading (releases file locks)
-Write-Output "Stop Clean app."
+# ---- Stop existing mount (releases file locks for upgrade) ----
 if (Test-Path "$runPath\$appName.exe") {
     Start-Process -FilePath "$runPath\$appName.exe" -ArgumentList "--stop --clean" -Wait
-    Write-Output "FlexApp One $appName.exe, was run with --stop --clean."
     Start-Sleep -Seconds 3
-} else {
-    Write-Output "No existing app to stop - first install."
 }
 
-# Download the FlexApp
-Write-Output "Downloading latest version of '$appName' from $url"
-$startTime = Get-Date
-
-# BitsTransfer module
+# ---- Download and mount the FlexApp ----
+New-Item -ItemType Directory -Force -Path $runPath | Out-Null
 Import-Module BitsTransfer
+Write-Output "Downloading $appName from $url..."
 Start-BitsTransfer -Source "$url/$appName.exe" -Destination "$runPath\$appName.exe"
-Write-Output "Time taken: $((Get-Date).Subtract($startTime).Seconds) second(s)"
-Write-Output "New application downloaded."
+Start-Process -FilePath "$runPath\$appName.exe" -ArgumentList $options
+Write-Output "Mounted: $appName with $options"
 
-# Run FlexApp with Options
-Write-Output "Loading new app."
-Start-Process -FilePath "$runPath\$appName.exe" -ArgumentList "$options"
-Write-Output "FlexApp One $appName.exe, was run with $options."
-
-# Remove existing scheduled task with the same name
-try {
-    Unregister-ScheduledTask -TaskName "${appName}.exe" -Confirm:$false -PassThru:$true
-} catch {
-    Write-Output "No task found with the name '${appName}.exe', skipping task removal."
-}
-
-# Schedule task to run the app on reboot
-$taskAction = New-ScheduledTaskAction -Execute "$runPath\$appName.exe" -Argument "$options"
+# ---- Schedule app to mount on reboot ----
+try { Unregister-ScheduledTask -TaskName "${appName}.exe" -Confirm:$false -EA SilentlyContinue } catch {}
+$taskAction = New-ScheduledTaskAction -Execute "$runPath\$appName.exe" -Argument $options
 $taskTrigger = New-ScheduledTaskTrigger -AtStartup
 $taskPrincipal = New-ScheduledTaskPrincipal -UserID "System" -LogonType ServiceAccount
 $taskSettings = New-ScheduledTaskSettingsSet -ExecutionTimeLimit (New-TimeSpan -Days 31)
-$task = New-ScheduledTask -Action $taskAction -Principal $taskPrincipal -Trigger $taskTrigger -Settings $taskSettings
-Register-ScheduledTask -TaskName "${appName}.exe" -InputObject $task
-
-Write-Output "FlexApp One $appName.exe, was run with $options."
+Register-ScheduledTask -TaskName "${appName}.exe" -InputObject (New-ScheduledTask -Action $taskAction -Principal $taskPrincipal -Trigger $taskTrigger -Settings $taskSettings)
+Write-Output "Scheduled task created: ${appName}.exe runs at startup"
