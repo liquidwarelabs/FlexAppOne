@@ -1,5 +1,5 @@
 # ============================================================================
-# Remove All FlexApp One Apps — FleetCTRL
+# Remove All FlexApp One Apps - FleetCTRL
 # ============================================================================
 #
 # ---- FleetCTRL Metadata ----
