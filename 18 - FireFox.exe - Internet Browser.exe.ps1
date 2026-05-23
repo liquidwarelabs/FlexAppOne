@@ -11,7 +11,7 @@
 # ============================================================================
 #
 # ---- FleetCTRL Metadata ----
-# DESCRIPTION:     FlexApp One: FireFox - Internet Browser
+# DESCRIPTION:     Deploys Firefox browser via FlexApp One
 # TAGS:            Liquidware FlexApp
 # EXECUTION MODE:  Combined
 # TYPE:            app
