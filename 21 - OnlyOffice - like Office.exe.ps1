@@ -11,7 +11,7 @@
 # ============================================================================
 #
 # ---- FleetCTRL Metadata ----
-# DESCRIPTION:     FlexApp One: OnlyOffice - like Office
+# DESCRIPTION:     Deploys OnlyOffice productivity suite via FlexApp One
 # TAGS:            Liquidware FlexApp
 # EXECUTION MODE:  Combined
 # TYPE:            app
